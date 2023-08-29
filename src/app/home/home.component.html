@@ -1,1 +1,28 @@
-<p>home works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-dark table-hover">
+                <thead> 
+                    <!-- tr>th*3  -->
+                    <tr>
+                        <th>No</th>
+                        <th>Tema</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of preguntas">
+                        <td>{{p.id}}</td>
+                        <td>{{p.pregunta}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

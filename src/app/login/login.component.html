@@ -1,8 +1,16 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-chat-left-dots-fill"></i>
+            &nbsp;Foro Dudas ITSCH
+          </a>
+    </div>
+</nav>
 <div class="container">
     <div class="row">
         <div class="col"></div>
-        <div class="col">
-            <div class="card">
+        <div class="col text-center">
+            <div class="card mt-3">
                 <div class="card-header">
                     Inicio de sesion
                 </div>
@@ -11,19 +19,20 @@
                         <div class="input-group-text">
                             <i class="bi bi-envelope-at"></i>
                         </div>
-                        <input type="email" class="form-control">
+                        <input type="email" class="form-control" placeholder="Correo">
                     </div>
-                    <div class="input-group">
+                    <div class="input-group mt-3">
                         <div class="input-group-text">
                             <i class="bi bi-key"></i>
                         </div>
-                        <input type="password" class="form-control">
+                        <input type="password" class="form-control" placeholder="Contraseña">
                     </div>
                 </div>
                 <div class="card-footer">
-                    <input type="button" class="btn btn-primary" value="Sign In">
+                    <input type="button" class="btn btn-primary float-end" value="Ingresar" (click)="login()">
                 </div>
             </div>
+            <input type="button" class="btn btn-link" value="Registrarse">
         </div>
         <div class="col"></div>
     </div>

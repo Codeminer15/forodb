@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+  preguntas = [
+    {id: 1, pregunta: '¿Cuál es la capital de Francia?'},
+    {id: 2, pregunta: '¿Cuántos años tengo?'}
+  ]
 }
