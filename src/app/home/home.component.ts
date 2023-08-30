@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class HomeComponent {
   preguntas = [
     {id: 1, pregunta: '¿Cuál es la capital de Francia?'},
-    {id: 2, pregunta: '¿Cuántos años tengo?'}
+    {id: 2, pregunta: '¿Cuántos años tengo?'},
+    {id: 3, pregunta: '¿Edad del Universo?'}
   ]
 }
