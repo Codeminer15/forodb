@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiRestService } from '../api-rest.service';
 
 @Component({
   selector: 'app-login',
@@ -7,8 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router: Router){}
+  email:string=""
+  pass =""
+  showError = false
+  showLoading = false
+  constructor(private router: Router, private api: ApiRestService){}
   login(){
-  this.router.navigate(['/home']);
+    this.showLoading = true
+    this.api.login(this.email, this.pass).subscribe({
+      next: respuesta => {
+        this.router.navigate(['/home']);
+      },
+      error: problemilla => {
+        this.showLoading = false
+        this.showError = true
+      }
+      
+    })
+  
   }
 }
