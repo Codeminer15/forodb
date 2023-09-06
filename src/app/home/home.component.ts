@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiRestService } from '../api-rest.service';
 
 @Component({
   selector: 'app-home',
@@ -11,4 +12,19 @@ export class HomeComponent {
     {id: 2, pregunta: '¿Cuántos años tengo?'},
     {id: 3, pregunta: '¿Edad del Universo?'}
   ]
+
+  constructor(private api: ApiRestService){}
+
+  ngOnInit():void {
+    this.consulta()
+  }
+
+  consulta(){
+    this.api.getAllPreguntas().subscribe({
+      next: datos => {
+        console.log(datos)
+      },
+      error: e => {}
+    })
+  }
 }
