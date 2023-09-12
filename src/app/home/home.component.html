@@ -1,8 +1,24 @@
 <div class="container">
     <div class="row">
+        <div class="col"></div>
         <div class="col">
-            
+            <div class="card mt-3">
+                <div class="card-header">Agregar pregunta</div>
+                <div class="card-body">
+                    <!--ngModel es para que funcione en tiempo real-->
+                    <select class="form-select" [(ngModel)]="newP.categoria">
+                        <option value="General">General</option>
+                        <option value="Programación">Programación</option>
+                        <option value="Redes">Redes</option>
+                    </select>
+                    <input type="text" class="form-control mt-1" [(ngModel)]="newP.pregunta">
+                    <button class="btn btn-outline-primary float-end mt-3" (click)="crearPregunta()">
+                        <i class="bi bi-cloud-upload"></i>
+                    </button>
+                </div>
+            </div>
         </div>
+        <div class="col"></div>
     </div>
     <div class="row">
         <div class="col">
@@ -17,7 +33,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let p of preguntas">
-                        <td>{{p.id}}</td>
+                        <td>{{p.no}}</td>
                         <td>{{p.pregunta}}</td>
                         <td>
                             <button class="btn btn-outline-secondary"><i class="bi bi-eyeglasses"></i></button>

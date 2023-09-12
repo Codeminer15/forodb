@@ -8,10 +8,10 @@ import { ApiRestService } from '../api-rest.service';
 })
 export class HomeComponent {
   preguntas = [
-    {id: 1, pregunta: '¿Cuál es la capital de Francia?'},
-    {id: 2, pregunta: '¿Cuántos años tengo?'},
-    {id: 3, pregunta: '¿Edad del Universo?'}
+    {no: 1, pregunta: '¿Cuál?', categoria:'', correo:'', fecha:'', id:''}
   ]
+
+  newP = {categoria:"", pregunta:""}
 
   constructor(private api: ApiRestService){}
 
@@ -23,8 +23,27 @@ export class HomeComponent {
     this.api.getAllPreguntas().subscribe({
       next: datos => {
         console.log(datos)
+        let i = 1;
+        this.preguntas = datos.documents.map((p: any) => ({
+          no: i++,
+          pregunta: p.fields.pregunta.stringValue,
+          categoria: p.fields.categoria,
+          correo: p.fields.correo.stringValue,
+          fecha: p.fields.fecha.timestampValue,
+          id: p.name.split("/").pop()
+        }))
+        console.log(this.preguntas)
       },
       error: e => {}
+    })
+  }
+  crearPregunta(){
+    //localStorage es un espacio de almacenamiento en el navegador
+    const correo = localStorage.getItem("correo") || ""
+    const fecha = new Date().toISOString();
+    this.api.createPregunta(this.newP.categoria, correo, this.newP.pregunta, fecha).subscribe({
+      next: resp => {this.consulta()},
+      error: e => {console.log(e)}
     })
   }
 }

@@ -17,12 +17,20 @@ url = "https://firestore.googleapis.com/v1/projects/foro-dudas-itsch/databases/(
   register(email: string, pass: string){
     return this.http.post(this.urlRegister, {"email": email, "password":pass, "returnSecureToken":true})
   }
+
   //Conexión a la base datos: projecto, nombre de la base de datos y documentos que se mando a la var url
   getAllPreguntas(){
-    return this.http.get(this.url + "preguntas")
+    return this.http.get<any>(this.url + "preguntas")
   }
 
   createPregunta(categoria: string, correo:string, pregunta:string, fecha:string){
+    const newDoc ={"fields": {
+      "correo": {"stringValue": correo},
+      "categoria": {"stringValue": categoria},
+      "pregunta": {"stringValue": pregunta},
+      "fecha": {"timestampValue": fecha}
+    }
+  }
     return this.http.post(this.url + "preguntas", {})
   }
 
