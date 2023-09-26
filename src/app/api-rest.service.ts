@@ -20,25 +20,32 @@ url = "https://firestore.googleapis.com/v1/projects/foro-dudas-itsch/databases/(
 
   //Conexión a la base datos: projecto, nombre de la base de datos y documentos que se mando a la var url
   getAllPreguntas(){
-    return this.http.get<any>(this.url + "preguntas")
+    return this.http.get<any>(this.url + "preguntas?pageSize=100")
   }
 
-  createPregunta(categoria: string, correo:string, pregunta:string, fecha:string){
-    const newDoc ={"fields": {
+  createPregunta(categoria:string, correo:string, pregunta:string, fecha:string){
+    const newDoc ={
+      "fields": {
       "correo": {"stringValue": correo},
       "categoria": {"stringValue": categoria},
       "pregunta": {"stringValue": pregunta},
       "fecha": {"timestampValue": fecha}
     }
   }
-    return this.http.post(this.url + "preguntas", {})
+    return this.http.post(this.url + "preguntas", newDoc)
+  }
+  // fecha:string, correo:string
+  updatePregunta(categoria: string, pregunta:string, id:string){
+    const newDoc ={
+      "fields": {
+      "pregunta": {"stringValue": pregunta}
+      }
+    }
+    return this.http.patch(this.url + "preguntas/"+id+"?updateMask.fieldPaths=pregunta", newDoc)
   }
 
-  updatePregunta(categoria: string, correo:string, pregunta:string, fecha:string, id:string){
-    return this.http.patch(this.url + "preguntas/"+id, {})
-  }
-
-  deletePrefunta(id:string){
+  deletePregunta(id:string){
     return this.http.delete(this.url + `preguntas/${id}`)
   }
+
 }

@@ -12,6 +12,7 @@ export class HomeComponent {
   ]
 
   newP = {categoria:"", pregunta:""}
+  modP ={categoria:"", pregunta:"", id:""}
 
   constructor(private api: ApiRestService){}
 
@@ -22,15 +23,18 @@ export class HomeComponent {
   consulta(){
     this.api.getAllPreguntas().subscribe({
       next: datos => {
-        console.log(datos)
+        //console.log(datos)
         let i = 1;
-        this.preguntas = datos.documents.map((p: any) => ({
+        const documents = datos.documents.filter((p:any) => p.hasOwnProperty("fields"))
+        console.log(documents)
+        this.preguntas = documents.map((p: {name: String, fields: any}) => (
+          {
           no: i++,
-          pregunta: p.fields.pregunta.stringValue,
-          categoria: p.fields.categoria,
-          correo: p.fields.correo.stringValue,
-          fecha: p.fields.fecha.timestampValue,
-          id: p.name.split("/").pop()
+          pregunta: p.fields.hasOwnProperty('pregunta')? p.fields.pregunta.stringValue:"",
+          categoria: p.fields.hasOwnProperty('categoria')? p.fields.categoria.stringValue:"",
+          correo: p.fields.hasOwnProperty('correo')? p.fields.correo.stringValue:"",
+          fecha: p.fields.hasOwnProperty('fecha')? p.fields.timestampValue:"",
+          id: p.name.split("/").pop(),
         }))
         console.log(this.preguntas)
       },
@@ -41,9 +45,31 @@ export class HomeComponent {
     //localStorage es un espacio de almacenamiento en el navegador
     const correo = localStorage.getItem("correo") || ""
     const fecha = new Date().toISOString();
+    if(this.newP.categoria == "" || this.newP.pregunta == ""){
+      alert("Debes escribir la pregunta y seleccionar la categoria");
+      return;
+    }
     this.api.createPregunta(this.newP.categoria, correo, this.newP.pregunta, fecha).subscribe({
       next: resp => {this.consulta()},
       error: e => {console.log(e)}
     })
+  }
+
+  borrarPregunta(id:string){
+    this.api.deletePregunta(id).subscribe({
+      next: resp => {this.consulta()},
+      error: e => {console.log(e)}
+    })
+  }
+
+  modificarPregunta(){
+    this.api.updatePregunta(this.modP.categoria,this.modP.pregunta, this.modP.id).subscribe({
+      next: resp => {this.consulta()},
+      error: e => {console.log(e)}
+    })
+  }
+
+  editarPregunta(p:any){
+    this.modP = JSON.parse(JSON.stringify(p))
   }
 }
