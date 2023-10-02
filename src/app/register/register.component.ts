@@ -17,7 +17,7 @@ export class RegisterComponent {
     this.showLoading = true
     this.api.register(this.email, this.pass).subscribe({
       next: respuesta => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
       },
       error: problemilla => {
         this.showLoading = false
